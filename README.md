@@ -46,6 +46,29 @@ node web {
 }
 ```
 
+Installation
+------------
+
+### puppet-librarian Puppetfile
+```
+forge "http://forge.puppetlabs.com"
+
+mod 'jfryman/nginx', '0.0.9'
+
+mod 'rchrd2/dokku',
+  :git => "git://github.com/rchrd2/puppet-dokku.git"
+```
+
+### Puppetforge
+
+Coming soon. 
+
+
+Todo
+----
+
+- [ ] Set hostname for dokku (/home/dokku/HOSTNAME)
+- ? Feature requests welcome
 
 
 License
