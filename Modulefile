@@ -8,4 +8,8 @@ description 'Puppet module for Dokku'
 project_page 'https://github.com/rchrd2/puppet-dokku'
 
 ## Add dependencies, if any:
-# dependency 'username/name', '>= 1.2.0'
+dependency 'puppetlabs/git', '>= 0'
+dependency 'puppetlabs/vcsrepo', '>= 0'
+dependency 'puppetlabs/apt', '>= 0'
+dependency 'puppetlabs/concat', '>= 0'
+dependency 'puppetlabs/stdlib', '>= 0'

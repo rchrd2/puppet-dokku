@@ -1,41 +1,53 @@
 # == Class: dokku
 #
-# Full description of class dokku here.
+# Installs and updates Dokku
+#
+# To install the latest verion of Dokku, just install the module
+# and include dokku in your site.pp file
 #
 # === Parameters
 #
-# Document parameters here.
-#
-# [*sample_parameter*]
-#   Explanation of what this parameter affects and what it defaults to.
-#   e.g. "Specify one or more upstream ntp servers as an array."
-#
 # === Variables
-#
-# Here you should define a list of variables that this module would require.
-#
-# [*sample_variable*]
-#   Explanation of how this variable affects the funtion of this class and if it
-#   has a default. e.g. "The parameter enc_ntp_servers must be set by the
-#   External Node Classifier as a comma separated list of hostnames." (Note,
-#   global variables should not be used in preference to class parameters  as of
-#   Puppet 2.6.)
 #
 # === Examples
 #
-#  class { dokku:
-#    servers => [ 'pool.ntp.org', 'ntp.local.company.com' ]
-#  }
+# class {'dokku': 
+#   version => 'v0.2.2'
+# }
 #
 # === Authors
 #
-# Author Name <author@domain.com>
+# Richard Caceres <me@rchrd.net>
+# Originally derived from code by Quinn Rohlf
 #
 # === Copyright
 #
-# Copyright 2015 Your name here, unless otherwise noted.
-#
-class dokku {
+# Copyright 2015 Richard Caceres
 
+class dokku ($version = "v0.2.2") {
+    package { 'software-properties-common': ensure => installed }
+    package { "python-software-properties": ensure => installed }
+    package { "wget": ensure => installed }
+    package { "build-essential": ensure => installed }
 
+    vcsrepo { "/usr/src/dokku":
+        ensure => present,
+        provider => git,
+        revision => $version,
+        source => "https://github.com/progrium/dokku.git"
+    }
+
+    exec { "dokku-install":
+        cwd => '/usr/src/dokku',
+        command =>  "/usr/bin/make install",
+        timeout => "900", #it might take up to 15 minutes to install the whole shebang
+        logoutput => "true",
+        # refreshonly => "true", this is not really that useful
+        require => [Vcsrepo["/usr/src/dokku"], Package['wget'], Package['build-essential'], Package['software-properties-common'], Package['python-software-properties']]
+    }
+
+    exec { "dokku-reload-nginx":
+        command => '/usr/sbin/service nginx reload',
+        require => [Service['nginx'], Exec['dokku-install']]
+    }
 }
