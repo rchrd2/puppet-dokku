@@ -10,7 +10,6 @@ node web {
   # install dokku
   class {'dokku':
     version => 'v0.3.12',
-    require => [Class['nginx']],
   }
 
   # install dokku plugins
@@ -28,6 +27,9 @@ node web {
 
 Example with Puppet Nginx
 -------------------------
+
+Note. Integration with the Nginx module is a work in progress. It might take some troubleshooting as it is right now.
+
 ```
 node web {
   class { 'nginx': }
@@ -86,3 +88,11 @@ Support
 -------
 
 Please log tickets and issues at our [Github repository](https://github.com/rchrd2/puppet-dokku)
+
+
+Related
+-------
+
+- [Dokku](https://github.com/progrium/dokku)
+- [Lair](https://github.com/qrohlf/lair)
+- [Chef-dokku](https://github.com/fgrehm/chef-dokku)

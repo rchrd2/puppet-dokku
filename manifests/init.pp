@@ -18,36 +18,14 @@
 # === Authors
 #
 # Richard Caceres <me@rchrd.net>
-# Originally derived from code by Quinn Rohlf
+#
+# Originally derived from code by Quinn Rohlf. 
+# See https://github.com/qrohlf/lair
 #
 # === Copyright
 #
 # Copyright 2015 Richard Caceres
 
-class dokku ($version = "v0.2.2") {
-    package { 'software-properties-common': ensure => installed }
-    package { "python-software-properties": ensure => installed }
-    package { "wget": ensure => installed }
-    package { "build-essential": ensure => installed }
-
-    vcsrepo { "/usr/src/dokku":
-        ensure => present,
-        provider => git,
-        revision => $version,
-        source => "https://github.com/progrium/dokku.git"
-    }
-
-    exec { "dokku-install":
-        cwd => '/usr/src/dokku',
-        command =>  "/usr/bin/make install",
-        timeout => "900", #it might take up to 15 minutes to install the whole shebang
-        logoutput => "true",
-        # refreshonly => "true", this is not really that useful
-        require => [Vcsrepo["/usr/src/dokku"], Package['wget'], Package['build-essential'], Package['software-properties-common'], Package['python-software-properties']]
-    }
-
-    exec { "dokku-reload-nginx":
-        command => '/usr/sbin/service nginx reload',
-        require => [Service['nginx'], Exec['dokku-install']]
-    }
+class dokku ($version = 'v0.2.2') {
+    class { 'dokku::install': } 
 }
