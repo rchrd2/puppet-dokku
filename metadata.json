@@ -1,0 +1,18 @@
+{
+  "name": "rchrd2-dokku",
+  "version": "0.0.1",
+  "author": "rchrd2",
+  "summary": "Puppet module for Dokku",
+  "license": "MIT",
+  "source": "https://github.com/rchrd2/puppet-dokku",
+  "project_page": "https://github.com/rchrd2/puppet-dokku",
+  "issues_url": "https://github.com/rchrd2/puppet-dokku/issues",
+  "description": "Puppet module for Dokku",
+  "dependencies": [
+    {"name":"puppetlabs/git"},
+    {"name":"puppetlabs/vcsrepo"},
+    {"name":"puppetlabs/apt"},
+    {"name":"puppetlabs/concat"},
+    {"name":"puppetlabs/stdlib"}
+  ]
+}
