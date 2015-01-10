@@ -40,9 +40,7 @@ node web {
     require => [Class['nginx']],
   }
 
-  # The catch-all hostname
-  nginx::resource::vhost { '_' :
-    # Name the default app "www"
+  nginx::resource::vhost { 'example.com' :
     proxy => 'http://www',
   }
 }
