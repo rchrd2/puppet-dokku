@@ -61,16 +61,19 @@ mod 'rchrd2/dokku',
   :git => "git://github.com/rchrd2/puppet-dokku.git"
 ```
 
-### Puppetforge
 
-Coming soon. 
+### Puppetforge
+```
+puppet module install rchrd2-dokku
+```
+
 
 
 Todo
 ----
 
 - [ ] Set hostname for dokku (/home/dokku/HOSTNAME)
-- ? Feature requests welcome
+- [ ] ? Feature requests welcome
 
 
 License
